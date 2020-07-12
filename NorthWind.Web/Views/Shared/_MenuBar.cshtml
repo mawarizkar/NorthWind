@@ -1,0 +1,29 @@
+﻿<nav class="menu-bar">
+    <div class="logo">
+        <i class="fa fa-snowflake-o"></i>
+        <h1>north wind</h1>
+    </div>
+    <div class="menu-container">
+        @*HTML Helper*@
+        <a href="@Url.Action("CategoryIndex", "Product")" class="menu-link">
+            <i class="fa fa-gift"></i>
+            <span>Category Index</span>
+        </a>
+        <a href="@Url.Action("SupplierIndex", "Product")" class="menu-link">
+            <i class="fa fa-amazon"></i>
+            <span>Supplier Index</span>
+        </a>
+        <a href="@Url.Action("EmployeeIndex", "Employee")" class="menu-link">
+            <i class="fa fa-user"></i>
+            <span>Employee Index</span>
+        </a>
+        <a href="@Url.Action("CustomerIndex", "Customer")" class="menu-link">
+            <i class="fa fa-user"></i>
+            <span>Customer Index</span>
+        </a>
+        <a href="@Url.Action("Logout", "Account")" class="menu-link">
+            <i class="fa fa-sign-out"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</nav>

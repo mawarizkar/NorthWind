@@ -1,0 +1,39 @@
+﻿
+@using NorthWind.ViewModels
+@model RegisterVM
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="login-box">
+    <div class="login-form">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { Class = "standard-form" })) {
+            <div class="form-body">
+                <label>Username</label>
+                <div class="input-wrapper">
+                    @Html.TextBoxFor(mod => mod.Username)
+                    @Html.ValidationMessageFor(mod => mod.Username)
+                </div>
+                <label>Password</label>
+                <div class="input-wrapper">
+                    @Html.PasswordFor(mod => mod.Password)
+                    @Html.ValidationMessageFor(mod => mod.Password)
+                </div>
+                <label>Confirm Password</label>
+                <div class="input-wrapper">
+                    @Html.PasswordFor(mod => mod.ConfirmPassword)
+                    @Html.ValidationMessageFor(mod => mod.ConfirmPassword)
+                </div>
+                <label>Role</label>
+                <div class="input-wrapper">
+                    @Html.DropDownListFor(mod => mod.Role, new SelectList(Model.RolesDropdown, "Text", "Text"), "Choose Role")
+                    @Html.ValidationMessageFor(mod => mod.Role)
+                </div>
+            </div>
+            <button type="submit">Register</button>
+        }
+        <a href="@Url.Action("Login")" class="login-link">Back to Login</a>
+    </div>
+</div>

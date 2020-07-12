@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North Wind - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/javascript")
+</head>
+<body>
+    <div class="global-wrapper">
+        @Html.Partial("_MenuBar")
+        <div class="content-wrapper">
+            <h1 class="content-title">
+                <span class="title">@RenderSection("Judul", required: true)</span>
+                <span class="username-label">
+                    Welcome,
+                    @if (User.Identity.IsAuthenticated) {
+                        @HttpContext.Current.User.Identity.Name
+                    } else {
+                        <span>Anonymous</span>
+                    }
+                </span>
+            </h1>
+            <div class="content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @RenderSection("ModalDialog", false)
+    @RenderSection("Javascript", false)
+</body>
+</html>

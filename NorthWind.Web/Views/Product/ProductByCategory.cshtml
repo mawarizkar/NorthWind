@@ -1,0 +1,62 @@
+﻿@using NorthWind.ViewModels
+@model ProductByCategoryVM
+
+@section Judul{
+    Product By Category
+}
+
+@{
+    ViewBag.Title = "Product By Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var productGrid = new WebGrid(Model.ProductGrid, rowsPerPage: 10);
+    var productHtml = productGrid.GetHtml(columns: productGrid.Columns(
+        productGrid.Column("ID", " ", format: 
+        @<text>
+            <a class="row-button" href="@Url.Action("EditProduct", new { productID = item.ID })">Edit</a>
+        </text>),
+        productGrid.Column("Name", "Nama Produk"),
+        productGrid.Column("SupplierCompany", "Perusahaan Supplier"),
+        productGrid.Column("UnitPrice", "Harga per Unit", format:
+        @<text>
+            @Html.Action("FormatMoney", new { money = item.UnitPrice })
+        </text>)
+    ));
+}
+
+<table class="header-information">
+    <tbody>
+        <tr>
+            <td>Nama Kategori</td>
+            <td>@Model.CategoryName</td>
+        </tr>
+        <tr>
+            <td>Deskripsi Kategori</td>
+            <td>@Model.CategoryDescription</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="filter-container">
+    @using (Html.BeginForm("ProductByCategory", "Product", FormMethod.Post, new { Class = "standard-form" })) {
+        <input type="hidden" name="category-id" value="@Model.CategoryID"/>
+        <div class="form-body">
+            <label>Search By Name</label>
+            <input type="text" name="product-name" />
+            <label>Search By Supplier</label>
+            <select name="supplier-id">
+                <option selected value="0">All Suppliers</option>
+                @foreach (var supplier in ViewBag.SupplierDropDown) {
+                    <option value="@supplier.Value">@supplier.Text</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="form-button">Search</button>
+    }
+</div>
+
+@Html.ActionLink("Add New Product", "CreateProduct", null, new { Class = "return-button" })
+@Html.ActionLink("Back to Category", "CategoryIndex", null, new { Class = "return-button" })
+<div class="webgrid-container">
+    @(new HtmlString(productHtml.ToHtmlString()))
+</div>

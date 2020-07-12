@@ -1,0 +1,75 @@
+﻿@using NorthWind.ViewModels
+@model CreateEditSupplierVM
+
+@section Judul{
+    Add New Supplier
+}
+
+@{
+    ViewBag.Title = "Add New Supplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddNewSupplier", "Product", FormMethod.Post, new { Class = "standard-form" })) {
+    <div class="form-body">
+        <label>Company Name: </label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.Company)
+            @Html.ValidationMessageFor(m => m.Company)
+        </div>
+        <label>Contact Name: </label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.Contact)
+            @Html.ValidationMessageFor(m => m.Contact)
+        </div>
+        <label>Contact Title: </label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.Title)
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+        <label>Address</label>
+        <div class="input-wrapper">
+            @Html.TextAreaFor(m => m.Address)
+            @Html.ValidationMessageFor(m => m.Address)
+        </div> 
+        <label>City</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.City)
+            @Html.ValidationMessageFor(m => m.City)
+        </div>
+        <label>Region</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.Region)
+            @Html.ValidationMessageFor(m => m.Region)
+        </div>
+        <label>Postal Code</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.PostalCode)
+            @Html.ValidationMessageFor(m => m.PostalCode)
+        </div>
+        <label>Country</label>
+        <div>
+            @Html.TextBoxFor(m => m.Country)
+            @Html.ValidationMessageFor(m => m.Country)
+        </div>
+        <label>Postal Code</label>  
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.PostalCode)
+            @Html.ValidationMessageFor(m => m.PostalCode)
+        </div>
+        <label>Phone</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.Phone)
+            @Html.ValidationMessageFor(m => m.Phone)
+        </div>
+        <label>Fax</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(m => m.Fax)
+            @Html.ValidationMessageFor(m => m.Fax)
+        </div>
+
+    </div>
+    <button type="submit" class="form-button">Submit New Supplier</button>
+    @Html.ActionLink("Back to Supplier", "SupplierIndex", null, new { Class = "form-button" })
+}
+

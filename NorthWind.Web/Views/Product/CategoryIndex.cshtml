@@ -1,0 +1,38 @@
+﻿@using NorthWind.ViewModels
+@model List<CategoryIndexVM>
+
+@section Judul{
+    Category Index
+}
+
+@{
+    ViewBag.Title = "Category Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var categoryGrid = new WebGrid(Model, rowsPerPage: 10);
+    var categoryHtml = categoryGrid.GetHtml(columns: categoryGrid.Columns(
+            categoryGrid.Column("CategoryID", " ", format: 
+            @<text>
+                <a class="row-button" href="@Url.Action("ProductByCategory", new { categoryID = item.CategoryID })">Products</a>
+                <a class="row-button" href="@Url.Action("EditCurrentCategory", new { categoryID = item.CategoryID })">Edit</a>
+                <a class="row-button" href="@Url.Action("DeleteCategory", new { categoryID = item.CategoryID })">Delete</a>
+            </text>),
+            categoryGrid.Column("CategoryName", "Nama Kategori"),
+            categoryGrid.Column("CategoryDescription", "Deskripsi")
+        ));
+}
+
+<div class="filter-container">
+    @using (Html.BeginForm("CategoryIndex", "Product", FormMethod.Post, new { Class="standard-form" })) {
+        <div class="form-body">
+            <label>Search By Name</label>
+            <input type="text" name="category-name"/>
+        </div>
+        <button type="submit" class="form-button">Search</button>
+    }
+</div>
+
+@Html.ActionLink("Create Category", "AddNewCategory", null, new { Class = "return-button" })
+<div class="webgrid-container">
+    @(new HtmlString(categoryHtml.ToHtmlString()))
+</div>

@@ -1,0 +1,20 @@
+﻿@using NorthWind.ViewModels
+@model LoginVM
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="login-box">
+    <div class="login-form">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post)) {
+            @Html.TextBoxFor(mod => mod.Username, new { placeholder = "username" })
+            @Html.ValidationMessageFor(mod => mod.Username)
+            @Html.PasswordFor(mod => mod.Password, new { placeholder = "password" })
+            @Html.ValidationMessageFor(mod => mod.Password)
+            <button type="submit" class="login-button">LOG IN</button>
+        }
+    </div>
+    <a href="@Url.Action("Register")" class="register-link">Register Here</a>
+</div>

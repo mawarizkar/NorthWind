@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Fail to Delete Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Judul{
+    Cannot delete category
+}
+
+<p>
+    Gagal menghapus category, karena ditemukan 1 atau lebih data product yang termasuk ke dalam category ini.
+    Apabila anda bersikeras menghapus category ini, konsultasikan dengan developer team atau DBA.
+</p>
+
+@Html.ActionLink("Back to Category", "CategoryIndex", null, new { Class = "return-button" })

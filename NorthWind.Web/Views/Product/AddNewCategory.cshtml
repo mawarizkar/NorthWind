@@ -1,0 +1,30 @@
+﻿@using NorthWind.ViewModels
+@model CreateEditCategoryVM
+
+@section Judul{
+    Add New Category
+}
+
+@{
+    ViewBag.Title = "Add New Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using(Html.BeginForm("AddNewCategory", "Product", FormMethod.Post, new { Class="standard-form" })){
+    @Html.AntiForgeryToken()
+    <div class="form-body">
+        <label>Category Name: </label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.Name)
+            @Html.ValidationMessageFor(mod => mod.Name)
+        </div>
+        
+        <label>Category Description: </label>
+        <div class="input-wrapper">
+            @Html.TextAreaFor(mod => mod.Description)
+            @Html.ValidationMessageFor(mod => mod.Description)
+        </div>
+    </div>
+    <button type="submit" class="form-button">Submit New Category</button>
+    @Html.ActionLink("Back to Category", "CategoryIndex", null, new { Class="form-button"})
+}

@@ -1,0 +1,84 @@
+﻿@using NorthWind.ViewModels
+@model CreateEditEmployeeVM
+
+@{
+    ViewBag.Title = "Edit Employee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Judul{
+    Edit Employee
+}
+
+@using (Html.BeginForm("EditEmployee", "Employee", FormMethod.Post, new { Class = "standard-form" })) {
+    @Html.HiddenFor(mod => mod.ID)
+    <div class="form-body">
+        <label>Last Name: </label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.LastName)
+            @Html.ValidationMessageFor(mod => mod.LastName)
+        </div>
+        <label>First Name: </label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.FirstName)
+            @Html.ValidationMessageFor(mod => mod.FirstName)
+        </div>
+        <label>Title of Courtsey</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.TitleOfCourtesy)
+            @Html.ValidationMessageFor(mod => mod.TitleOfCourtesy)
+        </div>
+        <label>Job Title</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.Title)
+            @Html.ValidationMessageFor(mod => mod.Title)
+        </div>
+        <label>Birth Date</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.BirthDate, new { type = "date" })
+            @Html.ValidationMessageFor(mod => mod.BirthDate)
+        </div>
+        <label>Hire Date</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.HireDate, new { type = "date" })
+            @Html.ValidationMessageFor(mod => mod.HireDate)
+        </div>
+        <label>Address</label>
+        <div class="input-wrapper">
+            @Html.TextAreaFor(mod => mod.Address)
+            @Html.ValidationMessageFor(mod => mod.Address)
+        </div>
+        <label>City</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.City)
+            @Html.ValidationMessageFor(mod => mod.City)
+        </div>
+        <label>Region</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.Region)
+            @Html.ValidationMessageFor(mod => mod.Region)
+        </div>
+        <label>Postal Code</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.PostalCode)
+            @Html.ValidationMessageFor(mod => mod.PostalCode)
+        </div>
+        <label>Country</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.Country)
+            @Html.ValidationMessageFor(mod => mod.Country)
+        </div>
+        <label>Home Phone</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.HomePhone)
+            @Html.ValidationMessageFor(mod => mod.HomePhone)
+        </div>
+        <label>Extension</label>
+        <div class="input-wrapper">
+            @Html.TextBoxFor(mod => mod.Extension)
+            @Html.ValidationMessageFor(mod => mod.Extension)
+        </div>
+    </div>
+    <button type="submit" class="form-button">Update Employee</button>
+    @Html.ActionLink("Back to Employee", "EmployeeIndex", null, new { Class = "form-button" })
+}

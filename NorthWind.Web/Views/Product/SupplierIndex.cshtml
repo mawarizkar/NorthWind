@@ -1,0 +1,44 @@
+﻿@using NorthWind.ViewModels
+@model List<SupplierIndexVM>
+
+@section Judul{
+    Supplier Index
+}
+
+@{
+    ViewBag.Title = "Supplier Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var supplierGrid = new WebGrid(Model, rowsPerPage: 10);
+    var supplierHtml = supplierGrid.GetHtml(columns: supplierGrid.Columns(
+            supplierGrid.Column("ID", " ", format:
+    @<text>
+        <a class="row-button" href="@Url.Action("ProductBySupplier", new { supplierID = item.ID })">Products</a>
+        <a class="row-button" href="@Url.Action("EditCurrentSupplier", new { supplierID = item.ID })">Edit</a>
+        <a class="row-button" href="@Url.Action("DeleteSupplier", new { supplierID = item.ID })">Delete</a>
+    </text>),
+    supplierGrid.Column("Company", "Nama Perusahaan"),
+    supplierGrid.Column("Contact", "Perwakilan"),
+    supplierGrid.Column("Title", "Jabatan Perwakilan")
+    ));
+}
+
+<div class="filter-container">
+    @using (Html.BeginForm("SupplierIndex", "Product", FormMethod.Post, new { Class = "standard-form" })) {
+        <div class="form-body">
+            <label>Search By Company</label>
+            <input type="text" name="company" />
+            <label>Search By Contact</label>
+            <input type="text" name="contact" />
+            <label>Search By Title</label>
+            <input type="text" name="title" />
+        </div>
+        <button type="submit" class="form-button">Search</button>
+    }
+</div>
+
+@Html.ActionLink("Create Supplier", "AddNewSupplier", null, new { Class = "return-button" })
+<div class="webgrid-container">
+    @(new HtmlString(supplierHtml.ToHtmlString()))
+</div>
+

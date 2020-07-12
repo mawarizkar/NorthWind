@@ -1,0 +1,307 @@
+﻿@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans/Regular/OpenSans-Regular.ttf') format('truetype');
+}
+html {
+    font-family: 'OpenSans';
+    font-size:12px;
+    width:100%;
+    height:100%;
+}
+body {
+    width:100%;
+    height:100%;
+    min-width:1024px;
+}
+.global-wrapper {
+    display:flex;
+    min-height:100%;
+}
+.menu-bar {
+    background-color:#3498db;
+    color:white;
+    flex-grow:0;
+    width:180px;
+}
+.content-wrapper {
+    flex-grow:1;
+}
+.logo {
+    text-align:center;
+}
+.logo .fa-snowflake-o {
+    font-size: 50px;
+    display: inline-block;
+    margin-top:20px;
+}
+.logo h1 {
+    font-size:18px;
+    text-transform:uppercase;
+}
+.menu-container {
+    border-top: solid white 1px;
+}
+.menu-container .menu-link {
+    display:block;
+    color:white;
+    text-decoration:none;
+    font-size: 14px;
+    padding-left:10px;
+    height: 35px;
+    line-height: 35px;
+}
+.menu-container .menu-link:hover {
+    background-color:#2980b9;
+}
+.menu-link .fa {
+    padding-right:6px;
+}
+.content-wrapper .content-title {
+    display:flex;
+    justify-content:space-between;
+    margin:0;
+    padding:8px 12px 8px 12px;
+    background-color:#34495e;
+    color:white;
+    text-transform:capitalize;
+    font-size:18px;
+}
+.content-wrapper .content {
+    padding:12px;
+}
+
+/*Web Grid Design*/
+
+.webgrid-container table {
+    border-collapse:collapse;
+    width: 100%;
+    font-size: 14px;
+}
+.webgrid-container thead th {
+    padding: 6px;
+    background-color:#2980b9;
+    text-align:left;
+}
+.webgrid-container thead th a {
+    color:white;
+    text-decoration:none;
+    font-weight:normal;
+}
+.webgrid-container thead th:first-child {
+    border-top-left-radius:8px;
+}
+
+.webgrid-container thead th:last-child {
+    border-top-right-radius:8px;
+}
+.webgrid-container tbody tr:nth-child(even) {
+    background-color:#bdc3c7;
+}
+.webgrid-container tbody tr:nth-child(odd) {
+    background-color:#ecf0f1;
+}
+.webgrid-container tbody tr td {
+    padding:6px;
+}
+.webgrid-container tfoot td {
+    padding: 8px 8px 8px 20px;
+    background-color: #2980b9;
+    color: white;
+    word-spacing: 10px;
+    border-bottom-left-radius:8px;
+    border-bottom-right-radius:8px;
+    font-weight:bold;
+}
+.webgrid-container tfoot td a {
+    display: inline-block;
+    text-decoration:none;
+    color:white;
+    background-color:#34495e;
+    width:24px;
+    height:24px;
+    text-align:center;
+    border-radius:15px;
+    line-height:24px;
+}
+
+.header-information {
+    border-collapse:collapse;
+    width:100%;
+    font-size:14px;
+    margin-bottom:15px;
+}
+.header-information td:first-child {
+    font-weight:bold;
+    width:150px;
+}
+.header-information td {
+    padding: 6px;
+}
+
+.row-button, .return-button {
+    text-decoration:none;
+    color:white;
+    background-color:#16a085;
+    display:inline-block;
+    padding: 6px 10px;
+    border-radius:4px;
+}
+
+a.return-button {
+    margin-bottom:10px;
+}
+
+/*update*/
+.standard-form .form-body {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-gap: 15px;
+    margin-bottom:20px;
+}
+
+/*update*/
+.standard-form textarea {
+    resize:none;
+    height:100px;
+    width:350px;
+    box-sizing:border-box;
+}
+
+/*update*/
+.standard-form [type=text],
+.standard-form [type=number],
+.standard-form [type=date],
+.standard-form select{
+    height: 28px;
+    width: 350px;
+    box-sizing: border-box;
+}
+
+/*update*/
+.input-wrapper {
+    display:flex;
+}
+
+/*update*/
+.field-validation-error {
+    background-color: #e74c3c;
+    color: white;
+    height: 28px;
+    box-sizing: border-box;
+    line-height: 28px;
+    padding: 0 15px;
+    font-weight:bold;
+}
+
+.validation-summary-errors ul {
+    display: block;
+    background-color: #e74c3c;
+    color: white;
+    padding:15px;
+    margin:0;
+    margin-bottom:12px;
+    border-radius:4px;
+}
+
+.validation-summary-errors ul li {
+    list-style:none;
+}
+
+.form-button {
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    text-decoration: none;
+    color: white;
+    vertical-align: top;
+    border: none;
+    padding: 0 12px;
+    border-radius: 4px;
+}
+
+button.form-button {
+    background-color: #16a085;
+    cursor: pointer; /*update*/
+}
+
+a.form-button {
+    background-color: #c0392b;
+}
+
+.filter-container {
+    margin-bottom:20px;
+    border: solid silver 1px;
+    padding: 8px;
+    border-radius:4px;
+}
+
+.filter-container .standard-form .form-body {
+    grid-gap: 0;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    margin-bottom:8px;
+}
+
+/*DIALOG style*/
+
+.modal-layer {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    display:none; /*nanti js yang ubah jadi flex*/
+    align-items:center;
+    justify-content:space-around;
+}
+.modal-layer .popup-dialog {
+    display:none; /*nanti js yang ubah jadi block*/
+    background-color:white;
+    padding:20px;
+    border-radius:6px;
+    max-width:70%;
+}
+.popup-dialog table tr td{
+    padding:8px;
+}
+.popup-dialog table tr td:first-child {
+    color: #2980b9;
+    font-weight:bold;
+    width:150px;
+}
+.popup-dialog table tr td:last-child {
+    min-width:200px;
+}
+.popup-dialog table {
+    margin-bottom:15px;
+}
+.close-button, 
+.popup-dialog [type=button] {
+    text-decoration: none;
+    display:inline-block;
+    height: 25px;
+    padding: 0 20px;
+    color: white;
+    background-color: #c0392b;
+    line-height: 25px;
+    vertical-align:middle;
+    border-radius:4px;
+    border:none;
+}
+
+.popup-dialog button[type=button] {
+    background-color: #16a085;
+}
+
+.popup-dialog textarea {
+    resize:none;
+    width:250px;
+    height:55px;
+}
+
+.popup-dialog .validation-message {
+    color:#c0392b;
+    font-weight:bold;
+    margin-top:4px;
+}

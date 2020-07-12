@@ -1,0 +1,79 @@
+﻿@using NorthWind.ViewModels
+@model IEnumerable<EmployeeIndexVM>
+
+@section Judul{
+    Employee Index
+}
+
+@{
+    ViewBag.Title = "Employee Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var employeeGrid = new WebGrid(Model, rowsPerPage: 10);
+    var employeeHtml = employeeGrid.GetHtml(columns: employeeGrid.Columns(
+            employeeGrid.Column("ID", " ", format:
+            @<text>
+                <a class="row-button" href="@Url.Action("EditEmployee", new { employeeID = item.ID })">Edit</a>
+                <a class="row-button" href="@Url.Action("DeleteEmployee", new { employeeID = item.ID })">Delete</a>
+                <a class="row-button contact-button" data-id="@item.ID" href="javascript:;" >Contact</a>
+            </text>),
+            employeeGrid.Column("FullName", "Nama"),
+            employeeGrid.Column("BirthDate", "Tanggal Lahir", format:
+            @<text>
+                @Html.Action("DateFormatter", new { date = item.BirthDate })
+            </text>
+            ),
+            employeeGrid.Column("JobTitle", "Jabatan"),
+            employeeGrid.Column("HireDate", "Tanggal Hire", format:
+            @<text>
+                @Html.Action("DateFormatter", new { date = item.HireDate })
+            </text>)
+            ));
+}
+
+@Html.ActionLink("Create Employee", "CreateEmployee", null, new { Class = "return-button" })
+<div class="webgrid-container">
+    @(new HtmlString(employeeHtml.ToHtmlString()))
+</div>
+
+@section ModalDialog{
+<div class="modal-layer">
+    @* ~ : NorthWind.Web atau localhost:port atau full domain name*@
+    @Html.Partial("~/Views/Employee/_ContactDialog.cshtml")
+</div>
+}
+
+@section Javascript{
+<script>
+    $('.contact-button').click(function (event) {
+        var employeeID = $(this).attr("data-id");
+        var actionUrl = '@(Url.Action("EmployeeContact"))' + '?employeeID=' + employeeID;
+        $.ajax({
+            url: actionUrl,
+            success: function (data) {
+                $(".address").text(data.Address);
+                $(".city").text(data.City);
+                $(".region").text(data.Region);
+                $(".postal-code").text(data.PostalCode);
+                $(".country").text(data.Country);
+                $(".home-phone").text(data.HomePhone);
+                $(".extension").text(data.Extension);
+
+                $('.modal-layer').css("display", "flex");
+                $('.popup-dialog').css("display", "block");
+            },
+            fail: function () {
+                console.log("Ada gagal mendapatkan data.");
+            },
+            error: function () {
+                console.log("Ada internal server error.")
+            }
+        });
+    });
+
+    $('.close-button').click(function(event) {
+        $('.modal-layer').removeAttr("style");
+        $('.popup-dialog').removeAttr("style");
+    })
+</script>    
+}

@@ -1,0 +1,30 @@
+﻿@using NorthWind.ViewModels
+@model CreateEditCategoryVM
+
+@section Judul{
+    Edit Category
+}
+
+@{
+    ViewBag.Title = "Edit Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("EditCurrentCategory", "Product", FormMethod.Post, new { Class = "standard-form" }))
+{
+    @Html.HiddenFor(mod => mod.ID)
+<div class="form-body">
+    <label>Category Name: </label>
+    <div class="input-wrapper">
+        @Html.TextBoxFor(mod => mod.Name)
+        @Html.ValidationMessageFor(mod => mod.Name)
+    </div>
+    <label>Category Description: </label>
+    <div class="input-wrapper">
+        @Html.TextAreaFor(mod => mod.Description)
+        @Html.ValidationMessageFor(mod => mod.Description)
+    </div>
+</div>
+    <button type="submit" class="form-button">Update Category</button>
+    @Html.ActionLink("Back to Category", "CategoryIndex", null, new { Class = "form-button" })
+}

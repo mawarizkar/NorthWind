@@ -1,0 +1,46 @@
+﻿
+@using NorthWind.ViewModels
+@model ProductBySupplierVM
+
+@section Judul{
+    Product By Supplier
+}
+
+@{
+    ViewBag.Title = "Product By Supplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var productGrid = new WebGrid(Model.ProductGrid, rowsPerPage: 10);
+    var productHtml = productGrid.GetHtml(columns: productGrid.Columns(
+            productGrid.Column("Name", "Nama Produk"),
+            productGrid.Column("CategoryName", "Kategori Barang"),
+            productGrid.Column("UnitPrice", "Harga per Unit", format:
+                @<text>
+                    @Html.Action("FormatMoney", new { money = item.UnitPrice })
+                </text>)
+            ));
+}
+
+<table class="header-information">
+    <tbody>
+        <tr>
+            <td>Perusahaan Supplier</td>
+            <td>@Model.SupplierCompany</td>
+        </tr>
+        <tr>
+            <td>Nama Perwakilan</td>
+            <td>@Model.SupplierContact</td>
+        </tr>
+        <tr>
+            <td>Jabatan Perwakilan</td>
+            <td>@Model.SupplierTitle</td>
+        </tr>
+    </tbody>
+</table>
+
+@Html.ActionLink("Back to Supplier", "SupplierIndex", null, new { Class = "return-button" })
+
+<div class="webgrid-container">
+    @(new HtmlString(productHtml.ToHtmlString()))
+</div>
+

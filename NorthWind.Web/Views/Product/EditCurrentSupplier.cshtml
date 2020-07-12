@@ -1,0 +1,39 @@
+﻿@using NorthWind.ViewModels
+@model CreateEditSupplierVM
+
+@section Judul{
+    Edit Supplier
+}
+
+@{
+    ViewBag.Title = "Edit Current Supplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("EditCurrentSupplier", "Product", FormMethod.Post, new { Class = "standard-form" })) {
+    @Html.HiddenFor(m => m.ID)
+    <div class="form-body">
+        <label>Company Name: </label>
+        @Html.TextBoxFor(m => m.Company)
+        <label>Contact Name: </label>
+        @Html.TextBoxFor(m => m.Contact)
+        <label>Contact Title: </label>
+        @Html.TextBoxFor(m => m.Title)
+        <label>Address</label>
+        @Html.TextAreaFor(m => m.Address)
+        <label>City</label>
+        @Html.TextBoxFor(m => m.City)
+        <label>Region</label>
+        @Html.TextBoxFor(m => m.Region)
+        <label>Postal Code</label>
+        @Html.TextBoxFor(m => m.PostalCode)
+        <label>Country</label>
+        @Html.TextBoxFor(m => m.Country)
+        <label>Phone</label>
+        @Html.TextBoxFor(m => m.Phone)
+        <label>Fax</label>
+        @Html.TextBoxFor(m => m.Fax)
+    </div>
+    <button type="submit" class="form-button">Update Supplier</button>
+    @Html.ActionLink("Back to Supplier", "SupplierIndex", null, new { Class = "form-button" })
+}

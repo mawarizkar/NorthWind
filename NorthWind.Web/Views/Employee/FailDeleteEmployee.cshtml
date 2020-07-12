@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Fail to Delete Employee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Judul{
+    Fail To Delete Employee
+}
+
+<p>
+    Menghapus karyawan gagal, disebabkan karena ditemukan 1 atau lebih inferior dari employee ini, territories atau order.
+</p>
+
+@Html.ActionLink("Back to Employee", "EmployeeIndex", null, new { Class = "return-button" })

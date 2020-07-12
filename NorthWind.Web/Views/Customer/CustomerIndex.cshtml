@@ -1,0 +1,239 @@
+﻿@using NorthWind.ViewModels
+@model List<CustomerIndexVM>
+
+@section Judul{
+    Customer Index
+}
+
+@{
+    ViewBag.Title = "Customer Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var customerGrid = new WebGrid(Model, rowsPerPage: 10);
+    var customerHtml = customerGrid.GetHtml(columns: customerGrid.Columns(
+            customerGrid.Column("ID", " ", format:
+@<text>
+    <a class="row-button edit-customer" data-id="@item.ID" href="javascript:;">Edit</a>
+    <a class="row-button delete-customer" data-id="@item.ID" href="javascript:;">Delete</a>
+</text>),
+customerGrid.Column("Company", "Nama Perusahaan"),
+customerGrid.Column("Contact", "Perwakilan"),
+customerGrid.Column("Title", "Jabatan Perwakilan")
+));
+}
+
+<a href="javascript:;" class="return-button create-customer">Create Customer</a>
+<div class="webgrid-container">
+    @(new HtmlString(customerHtml.ToHtmlString()))
+</div>
+
+@section ModalDialog{
+<div class="modal-layer">
+    @Html.Partial("~/Views/Customer/_CreateDialog.cshtml")
+    @Html.Partial("~/Views/Customer/_EditDialog.cshtml")
+    @Html.Partial("~/Views/Customer/_DeleteDialog.cshtml")
+</div>
+}
+
+@section Javascript{
+    <script>
+        $('.create-customer').click(function (event) {
+            $('.modal-layer').css("display", "flex");
+            $('#add-dialog').css("display", "block");
+        });
+
+        $('#close-add-button').click(function (event) {
+            $('#add-dialog input').val('');
+            $('#add-dialog textarea').val('');
+            $('#add-dialog .validation-message').text('');
+            $('.modal-layer').removeAttr("style");
+            $('#add-dialog').removeAttr("style");
+        });
+
+        $('#add-dialog [type=button]').click(function (event) {
+            var viewModel = {
+                "ID": $('#add-dialog .customer-id').val(),
+                "Company": $('#add-dialog .company-name').val(),
+                "Contact": $('#add-dialog .contact-name').val(),
+                "Title": $('#add-dialog .contact-title').val(),
+                "Address": $('#add-dialog .address').val(),
+                "City": $('#add-dialog .city').val(),
+                "Region": $('#add-dialog .region').val(),
+                "PostalCode": $('#add-dialog .postal-code').val(),
+                "Country": $('#add-dialog .country').val(),
+                "Phone": $('#add-dialog .phone').val(),
+                "Fax": $('#add-dialog .fax').val()
+            };
+            var actionUrl = '@(Url.Action("CreateCustomer"))';
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: JSON.stringify(viewModel),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if (response.success && response.valid) {
+                        location.reload();
+                    } else if (response.success && !response.valid) {
+                        validationCreateCustomer(response.validations);
+                    } else {
+                        console.log("Internal Server Error");
+                    }
+                },
+                error: function (response) {
+                    console.log("Ada kesalahan, mungkin error 4XX atau forbidden");
+                }
+            });
+        });
+
+        $('.edit-customer').click(function (event) {
+            var customerID = $(this).attr("data-id");
+            var actionUrl = '@(Url.Action("EditCustomer"))' + '?customerID=' + customerID;
+            $.ajax({
+                url: actionUrl,
+                success: function (data) {
+                    $('#edit-dialog .customer-id').val(data.ID);
+                    $('#edit-dialog .company-name').val(data.Company);
+                    $('#edit-dialog .contact-name').val(data.Contact);
+                    $('#edit-dialog .contact-title').val(data.Title);
+                    $('#edit-dialog .address').val(data.Address);
+                    $('#edit-dialog .city').val(data.City);
+                    $('#edit-dialog .region').val(data.Region);
+                    $('#edit-dialog .postal-code').val(data.PostalCode);
+                    $('#edit-dialog .country').val(data.Country);
+                    $('#edit-dialog .phone').val(data.Phone);
+                    $('#edit-dialog .fax').val(data.Fax);
+
+                    $('.modal-layer').css("display", "flex");
+                    $('#edit-dialog').css("display", "block");
+                }
+            });
+        })
+
+        $('#close-edit-button').click(function (event) {
+            $('.modal-layer').removeAttr("style");
+            $('#edit-dialog').removeAttr("style");
+        });
+
+        $('#edit-dialog [type=button]').click(function (event) {
+            var viewModel = {
+                "ID": $('#edit-dialog .customer-id').val(),
+                "Company": $('#edit-dialog .company-name').val(),
+                "Contact": $('#edit-dialog .contact-name').val(),
+                "Title": $('#edit-dialog .contact-title').val(),
+                "Address": $('#edit-dialog .address').val(),
+                "City": $('#edit-dialog .city').val(),
+                "Region": $('#edit-dialog .region').val(),
+                "PostalCode": $('#edit-dialog .postal-code').val(),
+                "Country": $('#edit-dialog .country').val(),
+                "Phone": $('#edit-dialog .phone').val(),
+                "Fax": $('#edit-dialog .fax').val()
+            };
+            var actionUrl = '@(Url.Action("EditCustomer"))';
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: JSON.stringify(viewModel),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        console.log("Internal Server Error");
+                    }
+                },
+                error: function (response) {
+                    console.log("Ada kesalahan, mungkin error 4XX atau forbidden");
+                }
+            });
+        });
+
+        $('.delete-customer').click(function (event) {
+            var customerID = $(this).attr("data-id");
+            $('#delete-dialog .customer-id').val(customerID);
+            $('.modal-layer').css("display", "flex");
+            $('#delete-dialog').css("display", "block");
+        });
+
+        $('#close-delete-button').click(function (event) {
+            $('#delete-dialog input').val('');
+            $('.modal-layer').removeAttr("style");
+            $('#delete-dialog').removeAttr("style");
+        });
+
+        $('#delete-dialog [type=button]').click(function (event) {
+            var customerID = $('#delete-dialog .customer-id').val();
+            var actionUrl = '@(Url.Action("DeleteCustomer"))' + '?customerID=' + customerID;
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                success: function (response) {
+                    if (response.success && response.removeStatus) {
+                        //success delete
+                        location.reload();
+                    } else if (response.success && !response.removeStatus) {
+                        //fail delete
+                        $('#delete-dialog').removeAttr("style");
+                        $('#fail-delete-dialog').css("display", "block");
+                    } else {
+                        console.log("Internal server error");
+                    }
+                },
+                error: function (response) {
+                    console.log("Ada error, mungkin disebabkan oleh error 4XX atau forbidden.")
+                }
+            });
+        });
+
+        $('#close-fail-delete-button').click(function (event) {
+            $('#delete-dialog input').val('');
+            $('.modal-layer').removeAttr("style");
+            $('#fail-delete-dialog').removeAttr("style");
+        })
+
+        function validationCreateCustomer(validations) {
+            for (let validation of validations) {
+                switch (validation.Property) {
+                    case "ID":
+                        $('#add-dialog .customer-id + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "Company":
+                        $('#add-dialog .company-name + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "Contact":
+                        $('#add-dialog .contact-name + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "Title":
+                        $('#add-dialog .contact-title + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "Address":
+                        $('#add-dialog .address + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "City":
+                        $('#add-dialog .city + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "Region":
+                        $('#add-dialog .region + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "PostalCode":
+                        $('#add-dialog .postal-code + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "Country":
+                        $('#add-dialog .country + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "Phone":
+                        $('#add-dialog .phone + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    case "Fax":
+                        $('#add-dialog .fax + .validation-message').text(validation.FirstErrorMessage);
+                        break;
+                    default:
+                        console.log("property tidak bisa ditemukan");
+                        break;
+                }
+            }
+        }
+
+    </script>
+}

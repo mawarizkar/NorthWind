@@ -1,0 +1,48 @@
+﻿@model NorthWind.ViewModels.CreateEditProductVM
+
+@{
+    ViewBag.Title = "Create Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Judul{
+    Create Product
+}
+
+@using (Html.BeginForm("CreateProduct", "Product", FormMethod.Post, new { Class = "standard-form" })) {
+
+    @Html.ValidationSummary()
+    <div class="form-body">
+
+        <label>Product Name*:</label>
+        @Html.TextBoxFor(mod => mod.Name)
+
+        <label>Choose Supplier*:</label>
+        @Html.DropDownListFor(mod => mod.SupplierID, new SelectList(Model.SupplierDropDown, "Value", "Text"), "No Supplier")
+
+        <label>Choose Category*:</label>
+        @Html.DropDownListFor(mod => mod.CategoryID, new SelectList(Model.CategoryDropDown, "Value", "Text"), "No Category")
+
+        <label>Quantity Per Unit:</label>
+        @Html.TextBoxFor(mod => mod.Quantity)
+
+        <label>Unit Price:</label>
+        @Html.TextBoxFor(mod => mod.Price)
+
+        <label>Units In Stock:</label>
+        @Html.TextBoxFor(mod => mod.InStock, new { type = "number" })
+
+        <label>Units On Order</label>
+        @Html.TextBoxFor(mod => mod.OnOrder, new { type = "number" })
+
+        <label>Reorder Level</label>
+        @Html.TextBoxFor(mod => mod.ReOrder, new { type = "number" })
+
+        <label>Discontinued</label>
+        @Html.CheckBoxFor(mod => mod.Discontinued)
+
+    </div>
+
+    <button type="submit" class="form-button">Submit New Product</button>
+    @Html.ActionLink("Back to Category", "CategoryIndex", null, new { Class = "form-button" })
+}
